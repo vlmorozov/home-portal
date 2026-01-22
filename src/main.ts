@@ -5,9 +5,9 @@ import fastifyCookie from '@fastify/cookie';
 import fastifyHelmet from '@fastify/helmet';
 import fastifySensible from '@fastify/sensible';
 import fastifyCors from '@fastify/cors';
-import { ValidationPipe } from '@nestjs/common';
+import { ValidationPipe, VersioningType } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { AllExceptionsFilter } from './common/filters/all-exceptions.filter';
+import { AllExceptionsFilter } from './shared/utils/all-exceptions.filter';
 import { Logger } from '@nestjs/common';
 
 async function bootstrap() {
@@ -23,6 +23,7 @@ async function bootstrap() {
 
   app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true, forbidNonWhitelisted: true }));
   app.useGlobalFilters(new AllExceptionsFilter());
+  app.enableVersioning({ type: VersioningType.URI });
 
   const config = new DocumentBuilder()
     .setTitle('Auth Service')

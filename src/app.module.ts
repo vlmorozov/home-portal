@@ -1,14 +1,13 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from './config/config.module';
+import { ConfigModule } from './shared/infrastructure/config/config.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigService } from '@nestjs/config';
-import { AuthModule } from './infrastructure/auth/auth.module';
-import { UserOrmEntity } from './infrastructure/persistence/entities/user.orm-entity';
-import { OAuthAccountOrmEntity } from './infrastructure/persistence/entities/oauth-account.orm-entity';
-import { EmailVerificationTokenOrmEntity } from './infrastructure/persistence/entities/email-verification-token.orm-entity';
-import { RefreshTokenOrmEntity } from './infrastructure/persistence/entities/refresh-token.orm-entity';
-import { PinoLoggerModule } from './common/logger/pino.module';
+import { AuthModule } from './auth/auth.module';
+import { PinoLoggerModule } from './shared/infrastructure/logger/pino.module';
 import { join } from 'path';
+import { TasksModule } from './tasks/tasks.module';
+import { FinanceModule } from './finance/finance.module';
+import { ShoppingModule } from './shopping/shopping.module';
 
 @Module({
   imports: [
@@ -29,8 +28,10 @@ import { join } from 'path';
         migrationsRun: true,
       }),
     }),
-    TypeOrmModule.forFeature([UserOrmEntity, OAuthAccountOrmEntity, EmailVerificationTokenOrmEntity, RefreshTokenOrmEntity]),
     AuthModule,
+    TasksModule,
+    FinanceModule,
+    ShoppingModule,
   ],
 })
 export class AppModule {}

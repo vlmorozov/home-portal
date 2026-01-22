@@ -8,7 +8,7 @@ export default new DataSource({
   username: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
-  entities: [__dirname + '/src/infrastructure/persistence/entities/*.js'],
+  entities: [__dirname + '/src/**/infrastructure/persistence/typeorm/entities/*.js'],
   migrations: [__dirname + '/migrations/*.js'],
   synchronize: false,
   logging: true,

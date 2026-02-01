@@ -1,7 +1,6 @@
 services:
   hp_app:
     build: .
-    container_name: hp-app
     env_file: .env
     ports:
       - "${PORT}:${PORT}"
@@ -15,7 +14,6 @@ services:
 
   hp_nginx:
     image: nginx:1.27-alpine
-    container_name: hp-nginx
     depends_on:
       - hp_app
     environment:
@@ -29,13 +27,12 @@ services:
 
   hp_db:
     image: postgres:16-alpine
-    container_name: hp-postgres
     environment:
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_DB: ${DB_NAME}
     volumes:
-      - hp_pgdata:/var/lib/postgresql/data
+      - hp_pgdata_${STACK}:/var/lib/postgresql/data
 
   hp_pgadmin:
     image: dpage/pgadmin4:8
@@ -49,10 +46,10 @@ services:
 
   hp_mailhog:
     image: mailhog/mailhog:v1.0.1
-    container_name: hp-mailhog
     ports:
       - "${MAILHOG_WEBUI_PORT}:8025"  # Web UI
       - "${MAILHOG_SMTP_PORT}:1025"  # SMTP
 
 volumes:
   hp_pgdata:
+    name: hp_pgdata_${STACK}

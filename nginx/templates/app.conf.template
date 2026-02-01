@@ -2,7 +2,7 @@ server {
     listen 80;
 
     location / {
-        proxy_pass http://app:${APP_PORT};
+        proxy_pass http://hp_app:${APP_PORT};
         proxy_http_version 1.1;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;

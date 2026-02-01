@@ -18,6 +18,7 @@ export default () => ({
   email: {
     from: process.env.EMAIL_FROM,
     verifyUrl: process.env.EMAIL_VERIFICATION_URL,
+    resetUrl: process.env.EMAIL_PASSWORD_RESET_URL || process.env.EMAIL_VERIFICATION_URL,
     smtp: {
       host: process.env.SMTP_HOST,
       port: parseInt(process.env.SMTP_PORT || '1025', 10),

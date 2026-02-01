@@ -5,6 +5,9 @@ import { LoginEmailDto } from './dto/login-email.dto';
 import { LoginPhoneDto } from './dto/login-phone.dto';
 import { VerifyEmailDto } from './dto/verify-email.dto';
 import { RefreshDto } from './dto/refresh.dto';
+import { RequestPasswordResetEmailDto } from './dto/request-password-reset-email.dto';
+import { RequestPasswordResetPhoneDto } from './dto/request-password-reset-phone.dto';
+import { ResetPasswordDto } from './dto/reset-password.dto';
 import { RegisterUserUseCase } from '../application/handlers/register-user.usecase';
 import { LoginEmailUseCase } from '../application/handlers/login-email.usecase';
 import { LoginPhoneUseCase } from '../application/handlers/login-phone.usecase';
@@ -13,6 +16,9 @@ import { IssueRefreshUseCase } from '../application/handlers/issue-refresh.useca
 import { RefreshUseCase } from '../application/handlers/refresh.usecase';
 import { LogoutUseCase } from '../application/handlers/logout.usecase';
 import { LogoutAllUseCase } from '../application/handlers/logout-all.usecase';
+import { RequestPasswordResetEmailUseCase } from '../application/handlers/request-password-reset-email.usecase';
+import { RequestPasswordResetPhoneUseCase } from '../application/handlers/request-password-reset-phone.usecase';
+import { ResetPasswordUseCase } from '../application/handlers/reset-password.usecase';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -27,6 +33,9 @@ export class AuthController {
     private readonly refreshUC: RefreshUseCase,
     private readonly logoutUC: LogoutUseCase,
     private readonly logoutAllUC: LogoutAllUseCase,
+    private readonly requestResetEmailUC: RequestPasswordResetEmailUseCase,
+    private readonly requestResetPhoneUC: RequestPasswordResetPhoneUseCase,
+    private readonly resetPasswordUC: ResetPasswordUseCase,
   ) {}
 
   @Post('register') @HttpCode(201)
@@ -83,5 +92,26 @@ export class AuthController {
     await this.logoutAllUC.execute(body.userId);
     this.logger.log('Logout all sessions completed');
     return {};
+  }
+
+  @Post('password/restore/email') @HttpCode(200)
+  async requestPasswordResetEmail(@Body() dto: RequestPasswordResetEmailDto) {
+    this.logger.log(`Password reset requested by email for ${dto.email}`);
+    await this.requestResetEmailUC.execute(dto);
+    return { status: 'ok' };
+  }
+
+  @Post('password/restore/phone') @HttpCode(200)
+  async requestPasswordResetPhone(@Body() dto: RequestPasswordResetPhoneDto) {
+    this.logger.log(`Password reset requested by phone for ${dto.phone}`);
+    await this.requestResetPhoneUC.execute(dto);
+    return { status: 'ok' };
+  }
+
+  @Post('password/reset') @HttpCode(200)
+  async resetPassword(@Body() dto: ResetPasswordDto) {
+    this.logger.log('Password reset confirmation requested');
+    await this.resetPasswordUC.execute(dto);
+    return { status: 'ok' };
   }
 }

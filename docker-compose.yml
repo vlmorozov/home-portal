@@ -1,4 +1,4 @@
-name: home-portal-${STACK}
+name: homeportal-${STACK}
 
 services:
   hp_app:
@@ -11,8 +11,6 @@ services:
       - ./:/usr/src/app
       - /usr/src/app/node_modules
     command: sh -c "npm install && npm run start:dev"
-    expose:
-      - "${PORT}"
 
   hp_nginx:
     image: nginx:1.27-alpine
@@ -43,15 +41,11 @@ services:
       PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
     depends_on:
       - hp_db
-    expose:
-      - "80"
 
   hp_mailhog:
     image: mailhog/mailhog:v1.0.1
-    expose:
-      - "8025"
-      - "1025"
+
 
 volumes:
   hp_pgdata:
-    name: hp_pgdata_${STACK}
+    name: hp_pgdata

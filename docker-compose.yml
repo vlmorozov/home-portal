@@ -1,9 +1,9 @@
+name: home-portal-${STACK}
+
 services:
   hp_app:
     build: .
     env_file: .env
-    ports:
-      - "${PORT}:${PORT}"
     depends_on:
       - hp_db
       - hp_mailhog
@@ -11,6 +11,8 @@ services:
       - ./:/usr/src/app
       - /usr/src/app/node_modules
     command: sh -c "npm install && npm run start:dev"
+    expose:
+      - "${PORT}"
 
   hp_nginx:
     image: nginx:1.27-alpine
@@ -32,23 +34,23 @@ services:
       POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_DB: ${DB_NAME}
     volumes:
-      - hp_pgdata_${STACK}:/var/lib/postgresql/data
+      - hp_pgdata:/var/lib/postgresql/data
 
   hp_pgadmin:
     image: dpage/pgadmin4:8
     environment:
       PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
       PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
-    ports:
-      - "${PGADMIN_PORT}:80"
     depends_on:
       - hp_db
+    expose:
+      - "80"
 
   hp_mailhog:
     image: mailhog/mailhog:v1.0.1
-    ports:
-      - "${MAILHOG_WEBUI_PORT}:8025"  # Web UI
-      - "${MAILHOG_SMTP_PORT}:1025"  # SMTP
+    expose:
+      - "8025"
+      - "1025"
 
 volumes:
   hp_pgdata:

@@ -21,4 +21,14 @@ export class EmailService {
       html: `<p>Click to verify your email: <a href="${url}">${url}</a></p>`,
     });
   }
+
+  async sendPasswordReset(email: string, token: string) {
+    const url = this.cfg.get<string>('email.resetUrl') + token;
+    await this.transporter.sendMail({
+      from: this.cfg.get<string>('email.from'),
+      to: email,
+      subject: 'Reset your password',
+      html: `<p>Use this link to reset your password: <a href="${url}">${url}</a></p>`,
+    });
+  }
 }

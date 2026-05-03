@@ -19,6 +19,10 @@ lerna-debug.log*
 .env.test
 .env.production
 
+docker-compose.override.yml
+
 # temp directory
 .temp
 .tmp
+home-portal.code-workspace
+.codex

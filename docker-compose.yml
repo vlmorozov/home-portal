@@ -18,10 +18,11 @@ services:
       - hp_app
     environment:
       APP_PORT: ${PORT}
+      CORS_ALLOWED_HTTPS_HOST_REGEX: ${CORS_ALLOWED_HTTPS_HOST_REGEX:-a^}
     volumes:
       - ./nginx/templates:/etc/nginx/templates:ro
     command: >
-      sh -c "envsubst '$$APP_PORT' < /etc/nginx/templates/app.conf.template
+      sh -c "envsubst '$$APP_PORT $$CORS_ALLOWED_HTTPS_HOST_REGEX' < /etc/nginx/templates/app.conf.template
       > /etc/nginx/conf.d/default.conf
       && nginx -g 'daemon off;'"
 

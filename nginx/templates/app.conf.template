@@ -1,5 +1,6 @@
 map $http_origin $cors_origin {
     default "";
+    "~^https://${CORS_ALLOWED_HTTPS_HOST_REGEX}$" $http_origin;
     "~^http://([a-z0-9-]+\.)*home-portal\.local(:[0-9]+)?$" $http_origin;
     "~^http://localhost(:[0-9]+)?$" $http_origin;
     "~^http://127\.0\.0\.1(:[0-9]+)?$" $http_origin;

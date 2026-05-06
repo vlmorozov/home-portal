@@ -2,15 +2,14 @@ name: homeportal-${STACK}
 
 services:
   hp_app:
-    build: .
+    build:
+      context: .
+      target: production
     env_file: .env
     depends_on:
       - hp_db
       - hp_mailhog
-    volumes:
-      - ./:/usr/src/app
-      - /usr/src/app/node_modules
-    command: sh -c "npm install && npm run start:dev"
+    restart: unless-stopped
 
   hp_nginx:
     image: nginx:1.27-alpine

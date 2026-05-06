@@ -11,7 +11,6 @@ import { AllExceptionsFilter } from './shared/utils/all-exceptions.filter';
 import { Logger } from '@nestjs/common';
 
 const defaultAllowedOriginPatterns = [
-  'https://*.home-portal.mfspace.info',
   'http://*.home-portal.local',
   'http://localhost:*',
   'http://127.0.0.1:*',

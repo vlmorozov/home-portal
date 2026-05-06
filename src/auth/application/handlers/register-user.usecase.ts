@@ -1,4 +1,4 @@
-import { Inject, Injectable, Logger } from '@nestjs/common';
+import { ConflictException, Inject, Injectable, Logger } from '@nestjs/common';
 import { UserRepository, USER_REPOSITORY } from '../../domain/repositories/user.repository';
 import { PasswordHasher } from '../services/password.service';
 import { EmailTokenRepository, EMAIL_TOKEN_REPOSITORY } from '../../domain/repositories/email-token.repository';
@@ -18,7 +18,7 @@ export class RegisterUserUseCase {
   async execute(input: { username: string; email: string; phone?: string; password: string }): Promise<void> {
     this.logger.log(`Starting registration flow for ${input.email}`);
     const existing = await this.users.findByEmail(input.email);
-    if (existing) throw new Error('EMAIL_TAKEN');
+    if (existing) throw new ConflictException('EMAIL_TAKEN');
     this.logger.log('No existing user with this email. Proceeding to create user.');
     const hash = await this.hasher.hash(input.password);
     this.logger.log('Password hashed. Persisting user.');

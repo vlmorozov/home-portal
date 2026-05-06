@@ -48,4 +48,4 @@ services:
 
 volumes:
   hp_pgdata:
-    name: hp_pgdata
+    name: hp_pgdata_${STACK}

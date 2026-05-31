@@ -15,6 +15,7 @@
     "test:e2e": "jest --config test/e2e/jest-e2e.json",
     "migration:generate": "ts-node ./node_modules/typeorm/cli.js migration:generate -d ormconfig.ts migrations/auto",
     "migration:run": "ts-node ./node_modules/typeorm/cli.js migration:run -d ormconfig.ts",
+    "migration:run:dist": "typeorm migration:run -d dist/ormconfig.js",
     "migration:revert": "ts-node ./node_modules/typeorm/cli.js migration:revert -d ormconfig.ts"
   },
   "dependencies": {

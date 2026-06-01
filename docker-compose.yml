@@ -6,6 +6,8 @@ services:
       context: .
       target: production
     env_file: .env
+    environment:
+      CORS_ALLOWED_ORIGINS: ${CORS_ALLOWED_ORIGINS}
     depends_on:
       - hp_db
       - hp_mailhog

@@ -26,7 +26,6 @@ jobs:
             set -e
 
             BRANCH="${{ github.ref_name }}"
-            COMPOSE_FILE="docker-compose.yml"
             ENV_FILE_ARGS="--env-file .env"
 
             cd "${{ secrets.PROJECT_PATH }}"
@@ -41,10 +40,10 @@ jobs:
             git pull --ff-only origin "${BRANCH}"
 
             echo "Restart service"
-            docker compose -f "${COMPOSE_FILE}" down --remove-orphans
-            docker compose -f "${COMPOSE_FILE}" ${ENV_FILE_ARGS} up -d --build
+            docker compose ${ENV_FILE_ARGS} down --remove-orphans
+            docker compose ${ENV_FILE_ARGS} up -d --build
 
             echo "Executing migrations"
-            docker compose -f "${COMPOSE_FILE}" exec -T hp_app npm run migration:run:dist
+            docker compose ${ENV_FILE_ARGS} exec -T hp_app npm run migration:run:dist
 
             echo "Done"

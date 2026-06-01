@@ -40,10 +40,10 @@ jobs:
             git pull --ff-only origin "${BRANCH}"
 
             echo "Restart service"
-            docker compose down --remove-orphans
+            docker compose ${ENV_FILE_ARGS} down --remove-orphans
             docker compose ${ENV_FILE_ARGS} up -d --build
 
             echo "Executing migrations"
-            docker compose exec -T hp_app npm run migration:run:dist
+            docker compose ${ENV_FILE_ARGS} exec -T hp_app npm run migration:run:dist
 
             echo "Done"

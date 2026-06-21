@@ -1,17 +1,29 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { TaskRepository } from '../../../../domain/repositories/task.repository';
+import {
+  CreateTaskInput,
+  TaskRepository,
+  UpdateTaskInput,
+} from '../../../../domain/repositories/task.repository';
 import { Task } from '../../../../domain/task.entity';
 import { TaskOrmEntity } from '../entities/task.orm-entity';
 
 @Injectable()
 export class TaskTypeOrmRepository implements TaskRepository {
-  constructor(@InjectRepository(TaskOrmEntity) private readonly repo: Repository<TaskOrmEntity>) {}
+  constructor(
+    @InjectRepository(TaskOrmEntity)
+    private readonly repo: Repository<TaskOrmEntity>,
+  ) {}
 
-  async create(task: Partial<Task>): Promise<Task> {
-    const entity = this.repo.create({ status: 'pending', ...task });
-    return this.repo.save(entity);
+  async create(task: CreateTaskInput): Promise<Task> {
+    return this.repo.save(
+      this.repo.create({
+        userId: task.userId,
+        title: task.title,
+        description: task.description ?? null,
+      }),
+    );
   }
 
   findById(id: string, userId: string): Promise<Task | null> {
@@ -22,10 +34,25 @@ export class TaskTypeOrmRepository implements TaskRepository {
     return this.repo.find({ where: { userId }, order: { createdAt: 'DESC' } });
   }
 
-  async update(id: string, userId: string, updates: Partial<Task>): Promise<Task | null> {
+  async update(
+    id: string,
+    userId: string,
+    updates: UpdateTaskInput,
+  ): Promise<Task | null> {
     const existing = await this.repo.findOne({ where: { id, userId } });
     if (!existing) return null;
-    await this.repo.save({ ...existing, ...updates });
+
+    if (updates.title !== undefined || updates.description !== undefined) {
+      await this.repo.save({
+        ...existing,
+        title: updates.title ?? existing.title,
+        description:
+          updates.description !== undefined
+            ? updates.description
+            : existing.description,
+      });
+    }
+
     return this.repo.findOne({ where: { id, userId } });
   }
 

@@ -1,29 +1,46 @@
-import { BadRequestException, Inject, Injectable, Logger } from '@nestjs/common';
-import { TaskStatus, TASK_STATUSES } from '../../domain/task.entity';
-import { TaskRepository, TASK_REPOSITORY } from '../../domain/repositories/task.repository';
+import {
+  BadRequestException,
+  Inject,
+  Injectable,
+  Logger,
+} from '@nestjs/common';
+import {
+  TaskUnitOfWork,
+  TASK_UNIT_OF_WORK,
+} from '../../domain/repositories/task-unit-of-work';
+import { TaskTitle } from '../../domain/value-objects/task-title.vo';
 
 @Injectable()
 export class CreateTaskUseCase {
   private readonly logger = new Logger(CreateTaskUseCase.name);
-  constructor(@Inject(TASK_REPOSITORY) private readonly tasks: TaskRepository) {}
+
+  constructor(
+    @Inject(TASK_UNIT_OF_WORK) private readonly unitOfWork: TaskUnitOfWork,
+  ) {}
 
   async execute(input: {
     userId: string;
     title: string;
     description?: string | null;
-    status?: TaskStatus;
-    dueDate?: Date | null;
   }) {
-    const status = input.status ?? 'pending';
-    if (!TASK_STATUSES.includes(status)) throw new BadRequestException('INVALID_STATUS');
-    const task = await this.tasks.create({
-      userId: input.userId,
-      title: input.title,
-      description: input.description ?? null,
-      status,
-      dueDate: input.dueDate ?? null,
+    const title = this.createTitle(input.title);
+    const task = await this.unitOfWork.transaction(async ({ tasks }) => {
+      const createdTask = await tasks.create({
+        userId: input.userId,
+        title,
+        description: input.description ?? null,
+      });
+      return createdTask;
     });
     this.logger.log(`Task created ${task.id} by user ${input.userId}`);
     return task;
+  }
+
+  private createTitle(title: string): string {
+    try {
+      return new TaskTitle(title).value;
+    } catch (error) {
+      throw new BadRequestException((error as Error).message);
+    }
   }
 }

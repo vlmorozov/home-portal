@@ -12,14 +12,13 @@ import {
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 import { CurrentUserId } from '../../shared/utils/current-user-id.decorator';
-import { TaskStatus } from '../domain/task-event.entity';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
-import { CreateTaskUseCase } from '../application/handlers/create-task.usecase';
-import { ListTasksUseCase } from '../application/handlers/list-tasks.usecase';
-import { GetTaskUseCase } from '../application/handlers/get-task.usecase';
-import { UpdateTaskUseCase } from '../application/handlers/update-task.usecase';
-import { DeleteTaskUseCase } from '../application/handlers/delete-task.usecase';
+import { CreateTaskUseCase } from '../application/handlers/tasks/create-task.usecase';
+import { ListTasksUseCase } from '../application/handlers/tasks/list-tasks.usecase';
+import { GetTaskUseCase } from '../application/handlers/tasks/get-task.usecase';
+import { UpdateTaskUseCase } from '../application/handlers/tasks/update-task.usecase';
+import { DeleteTaskUseCase } from '../application/handlers/tasks/delete-task.usecase';
 
 @ApiTags('tasks')
 @ApiBearerAuth()
@@ -36,7 +35,6 @@ export class TaskController {
 
   @Post()
   create(@CurrentUserId() userId: string, @Body() dto: CreateTaskDto) {
-    const dueDate = dto.dueDate ? new Date(dto.dueDate) : null;
     return this.createTaskUC.execute({
       userId,
       title: dto.title,

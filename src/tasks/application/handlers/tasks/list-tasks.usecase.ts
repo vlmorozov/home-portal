@@ -1,5 +1,5 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
-import { TaskRepository, TASK_REPOSITORY } from '../../domain/repositories/task.repository';
+import { TaskRepository, TASK_REPOSITORY } from '../../../domain/repositories/task.repository';
 
 @Injectable()
 export class ListTasksUseCase {

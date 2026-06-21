@@ -1,12 +1,25 @@
-import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  Param,
+  Post,
+  Put,
+  UseGuards,
+} from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 import { CurrentUserId } from '../../shared/utils/current-user-id.decorator';
-import { CreateTaskEventUseCase } from '../application/handlers/create-task-event.usecase';
-import { GetLatestTaskEventUseCase } from '../application/handlers/get-latest-task-event.usecase';
-import { GetTaskEventUseCase } from '../application/handlers/get-task-event.usecase';
-import { ListTaskEventsUseCase } from '../application/handlers/list-task-events.usecase';
+import { CreateTaskEventUseCase } from '../application/handlers/task-events/create-task-event.usecase';
+import { DeleteTaskEventUseCase } from '../application/handlers/task-events/delete-task-event.usecase';
+import { GetLatestTaskEventUseCase } from '../application/handlers/task-events/get-latest-task-event.usecase';
+import { GetTaskEventUseCase } from '../application/handlers/task-events/get-task-event.usecase';
+import { ListTaskEventsUseCase } from '../application/handlers/task-events/list-task-events.usecase';
+import { UpdateTaskEventUseCase } from '../application/handlers/task-events/update-task-event.usecase';
 import { CreateTaskEventDto } from './dto/create-task-event.dto';
+import { UpdateTaskEventDto } from './dto/update-task-event.dto';
 
 @ApiTags('task-events')
 @ApiBearerAuth()
@@ -18,6 +31,8 @@ export class TaskEventsController {
     private readonly listTaskEventsUC: ListTaskEventsUseCase,
     private readonly getTaskEventUC: GetTaskEventUseCase,
     private readonly getLatestTaskEventUC: GetLatestTaskEventUseCase,
+    private readonly updateTaskEventUC: UpdateTaskEventUseCase,
+    private readonly deleteTaskEventUC: DeleteTaskEventUseCase,
   ) {}
 
   @Post()
@@ -44,12 +59,41 @@ export class TaskEventsController {
     return this.getLatestTaskEventUC.execute(taskId, userId);
   }
 
-  @Get(':eventId')
+  @Get(':taskEventId')
   get(
     @CurrentUserId() userId: string,
     @Param('taskId') taskId: string,
-    @Param('eventId') eventId: string,
+    @Param('taskEventId') taskEventId: string,
   ) {
-    return this.getTaskEventUC.execute(eventId, userId, taskId);
+    return this.getTaskEventUC.execute(taskEventId, userId, taskId);
+  }
+
+  @Put(':taskEventId')
+  update(
+    @CurrentUserId() userId: string,
+    @Param('taskId') taskId: string,
+    @Param('taskEventId') taskEventId: string,
+    @Body() dto: UpdateTaskEventDto,
+  ) {
+    return this.updateTaskEventUC.execute(taskId, taskEventId, userId, {
+      status: dto.status,
+      dueDate:
+        dto.dueDate !== undefined
+          ? dto.dueDate
+            ? new Date(dto.dueDate)
+            : null
+          : undefined,
+    });
+  }
+
+  @Delete(':taskEventId')
+  @HttpCode(204)
+  async delete(
+    @CurrentUserId() userId: string,
+    @Param('taskId') taskId: string,
+    @Param('taskEventId') taskEventId: string,
+  ) {
+    await this.deleteTaskEventUC.execute(taskId, taskEventId, userId);
+    return {};
   }
 }

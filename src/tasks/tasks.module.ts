@@ -8,15 +8,17 @@ import { TaskTypeOrmUnitOfWork } from './infrastructure/persistence/typeorm/task
 import { TASK_REPOSITORY } from './domain/repositories/task.repository';
 import { TASK_EVENT_REPOSITORY } from './domain/repositories/task-event.repository';
 import { TASK_UNIT_OF_WORK } from './domain/repositories/task-unit-of-work';
-import { CreateTaskUseCase } from './application/handlers/create-task.usecase';
-import { ListTasksUseCase } from './application/handlers/list-tasks.usecase';
-import { GetTaskUseCase } from './application/handlers/get-task.usecase';
-import { UpdateTaskUseCase } from './application/handlers/update-task.usecase';
-import { DeleteTaskUseCase } from './application/handlers/delete-task.usecase';
-import { CreateTaskEventUseCase } from './application/handlers/create-task-event.usecase';
-import { ListTaskEventsUseCase } from './application/handlers/list-task-events.usecase';
-import { GetTaskEventUseCase } from './application/handlers/get-task-event.usecase';
-import { GetLatestTaskEventUseCase } from './application/handlers/get-latest-task-event.usecase';
+import { CreateTaskUseCase } from './application/handlers/tasks/create-task.usecase';
+import { ListTasksUseCase } from './application/handlers/tasks/list-tasks.usecase';
+import { GetTaskUseCase } from './application/handlers/tasks/get-task.usecase';
+import { UpdateTaskUseCase } from './application/handlers/tasks/update-task.usecase';
+import { DeleteTaskUseCase } from './application/handlers/tasks/delete-task.usecase';
+import { CreateTaskEventUseCase } from './application/handlers/task-events/create-task-event.usecase';
+import { ListTaskEventsUseCase } from './application/handlers/task-events/list-task-events.usecase';
+import { GetTaskEventUseCase } from './application/handlers/task-events/get-task-event.usecase';
+import { GetLatestTaskEventUseCase } from './application/handlers/task-events/get-latest-task-event.usecase';
+import { UpdateTaskEventUseCase } from './application/handlers/task-events/update-task-event.usecase';
+import { DeleteTaskEventUseCase } from './application/handlers/task-events/delete-task-event.usecase';
 import { TaskController } from './presentation/tasks.controller';
 import { TaskEventsController } from './presentation/task-events.controller';
 
@@ -36,6 +38,8 @@ import { TaskEventsController } from './presentation/task-events.controller';
     ListTaskEventsUseCase,
     GetTaskEventUseCase,
     GetLatestTaskEventUseCase,
+    UpdateTaskEventUseCase,
+    DeleteTaskEventUseCase,
   ],
 })
 export class TasksModule {}

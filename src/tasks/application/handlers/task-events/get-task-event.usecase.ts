@@ -2,7 +2,7 @@ import { Inject, Injectable, Logger, NotFoundException } from '@nestjs/common';
 import {
   TaskEventRepository,
   TASK_EVENT_REPOSITORY,
-} from '../../domain/repositories/task-event.repository';
+} from '../../../domain/repositories/task-event.repository';
 
 @Injectable()
 export class GetTaskEventUseCase {

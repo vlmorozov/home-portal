@@ -1,8 +1,8 @@
-export type TaskId = string;
+export type TaskListId = string;
 
-export class Task {
+export class TaskList {
   constructor(
-    public readonly id: TaskId,
+    public readonly id: TaskListId,
     public readonly userId: string,
     public title: string,
     public description: string | null,

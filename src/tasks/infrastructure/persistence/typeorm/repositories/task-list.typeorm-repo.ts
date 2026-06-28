@@ -2,43 +2,43 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import {
-  CreateTaskInput,
-  TaskRepository,
-  UpdateTaskInput,
-} from '../../../../domain/repositories/task.repository';
-import { Task } from '../../../../domain/task.entity';
-import { TaskOrmEntity } from '../entities/task.orm-entity';
+  CreateTaskListInput,
+  TaskListRepository,
+  UpdateTaskListInput,
+} from '../../../../domain/repositories/task-list.repository';
+import { TaskList } from '../../../../domain/task-list.entity';
+import { TaskListOrmEntity } from '../entities/task-list.orm-entity';
 
 @Injectable()
-export class TaskTypeOrmRepository implements TaskRepository {
+export class TaskListTypeOrmRepository implements TaskListRepository {
   constructor(
-    @InjectRepository(TaskOrmEntity)
-    private readonly repo: Repository<TaskOrmEntity>,
+    @InjectRepository(TaskListOrmEntity)
+    private readonly repo: Repository<TaskListOrmEntity>,
   ) {}
 
-  async create(task: CreateTaskInput): Promise<Task> {
+  create(taskList: CreateTaskListInput): Promise<TaskList> {
     return this.repo.save(
       this.repo.create({
-        userId: task.userId,
-        title: task.title,
-        description: task.description ?? null,
+        userId: taskList.userId,
+        title: taskList.title,
+        description: taskList.description ?? null,
       }),
     );
   }
 
-  findById(id: string, userId: string): Promise<Task | null> {
+  findById(id: string, userId: string): Promise<TaskList | null> {
     return this.repo.findOne({ where: { id, userId } });
   }
 
-  findAllForUser(userId: string): Promise<Task[]> {
+  findAllForUser(userId: string): Promise<TaskList[]> {
     return this.repo.find({ where: { userId }, order: { createdAt: 'DESC' } });
   }
 
   async update(
     id: string,
     userId: string,
-    updates: UpdateTaskInput,
-  ): Promise<Task | null> {
+    updates: UpdateTaskListInput,
+  ): Promise<TaskList | null> {
     const existing = await this.repo.findOne({ where: { id, userId } });
     if (!existing) return null;
 
@@ -56,7 +56,7 @@ export class TaskTypeOrmRepository implements TaskRepository {
     return this.repo.findOne({ where: { id, userId } });
   }
 
-  async delete(id: string, userId: string) {
+  async delete(id: string, userId: string): Promise<boolean> {
     const result = await this.repo.delete({ id, userId });
     return !!result.affected && result.affected > 0;
   }

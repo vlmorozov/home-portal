@@ -1,6 +1,6 @@
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
-import { AppModule } from '../../src/app.module';
+import { AppModule } from '@app/app.module';
 import { FastifyAdapter } from '@nestjs/platform-fastify';
 import request from 'supertest';
 

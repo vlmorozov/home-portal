@@ -8,8 +8,8 @@ import {
 import {
   TaskUnitOfWork,
   TASK_UNIT_OF_WORK,
-} from '../../../domain/repositories/task-unit-of-work';
-import { TaskTitle } from '../../../domain/value-objects/task-title.vo';
+} from '@tasks/domain/repositories/task-unit-of-work';
+import { TaskTitle } from '@tasks/domain/value-objects/task-title.vo';
 
 @Injectable()
 export class UpdateTaskUseCase {

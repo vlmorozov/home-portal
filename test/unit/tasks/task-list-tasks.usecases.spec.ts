@@ -1,7 +1,7 @@
 import { NotFoundException } from '@nestjs/common';
-import { AddTaskToTaskListUseCase } from '../../../src/tasks/application/handlers/task-lists/add-task-to-task-list.usecase';
-import { ListTaskListTasksUseCase } from '../../../src/tasks/application/handlers/task-lists/list-task-list-tasks.usecase';
-import { RemoveTaskFromTaskListUseCase } from '../../../src/tasks/application/handlers/task-lists/remove-task-from-task-list.usecase';
+import { AddTaskToTaskListUseCase } from '@tasks/application/handlers/task-lists/add-task-to-task-list.usecase';
+import { ListTaskListTasksUseCase } from '@tasks/application/handlers/task-lists/list-task-list-tasks.usecase';
+import { RemoveTaskFromTaskListUseCase } from '@tasks/application/handlers/task-lists/remove-task-from-task-list.usecase';
 
 describe('TaskListTask use cases', () => {
   const userId = 'user-1';

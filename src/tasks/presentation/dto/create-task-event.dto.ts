@@ -1,6 +1,6 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { IsDateString, IsIn, IsOptional } from 'class-validator';
-import { TaskStatus, TASK_STATUSES } from '../../domain/task-event.entity';
+import { TaskStatus, TASK_STATUSES } from '@tasks/domain/task-event.entity';
 
 export class CreateTaskEventDto {
   @ApiProperty({ enum: TASK_STATUSES, example: 'in_progress' })

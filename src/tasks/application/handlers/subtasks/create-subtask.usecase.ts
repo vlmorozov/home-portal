@@ -8,11 +8,11 @@ import {
 import {
   SubtaskRepository,
   SUBTASK_REPOSITORY,
-} from '../../../domain/repositories/subtask.repository';
+} from '@tasks/domain/repositories/subtask.repository';
 import {
   TaskRepository,
   TASK_REPOSITORY,
-} from '../../../domain/repositories/task.repository';
+} from '@tasks/domain/repositories/task.repository';
 
 @Injectable()
 export class CreateSubtaskUseCase {

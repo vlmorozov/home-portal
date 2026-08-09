@@ -8,8 +8,8 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { UserOrmEntity } from '../../../../../auth/infrastructure/persistence/typeorm/entities/user.orm-entity';
-import { TaskStatus } from '../../../../domain/task-event.entity';
+import { UserOrmEntity } from '@auth/infrastructure/persistence/typeorm/entities/user.orm-entity';
+import { TaskStatus } from '@tasks/domain/task-event.entity';
 import { TaskOrmEntity } from './task.orm-entity';
 
 @Entity('task_events')
@@ -43,7 +43,9 @@ export class TaskEventOrmEntity {
   @JoinColumn({ name: 'taskId' })
   task!: TaskOrmEntity;
 
-  @ManyToOne(() => UserOrmEntity, { onDelete: 'CASCADE' })
+  @ManyToOne(() => UserOrmEntity, (user) => user.taskEvents, {
+    onDelete: 'CASCADE',
+  })
   @JoinColumn({ name: 'userId' })
   user!: UserOrmEntity;
 }

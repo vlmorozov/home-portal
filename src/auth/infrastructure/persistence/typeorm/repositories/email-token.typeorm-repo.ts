@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { EmailTokenRepository } from '../../../../domain/repositories/email-token.repository';
+import { EmailTokenRepository } from '@auth/domain/repositories/email-token.repository';
 import { EmailVerificationTokenOrmEntity } from '../entities/email-verification-token.orm-entity';
 
 @Injectable()

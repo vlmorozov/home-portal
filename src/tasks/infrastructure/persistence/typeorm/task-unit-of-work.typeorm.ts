@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { DataSource } from 'typeorm';
-import { TaskUnitOfWork } from '../../../domain/repositories/task-unit-of-work';
+import { TaskUnitOfWork } from '@tasks/domain/repositories/task-unit-of-work';
 import { TaskEventOrmEntity } from './entities/task-event.orm-entity';
 import { TaskOrmEntity } from './entities/task.orm-entity';
 import { TaskEventTypeOrmRepository } from './repositories/task-event.typeorm-repo';

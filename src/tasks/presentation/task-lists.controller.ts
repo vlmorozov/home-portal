@@ -11,7 +11,7 @@ import {
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
-import { CurrentUserId } from '../../shared/utils/current-user-id.decorator';
+import { CurrentUserId } from '@shared/utils/current-user-id.decorator';
 import { AddTaskToTaskListUseCase } from '../application/handlers/task-lists/add-task-to-task-list.usecase';
 import { CreateTaskListUseCase } from '../application/handlers/task-lists/create-task-list.usecase';
 import { DeleteTaskListUseCase } from '../application/handlers/task-lists/delete-task-list.usecase';

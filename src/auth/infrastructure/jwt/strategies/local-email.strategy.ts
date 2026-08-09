@@ -1,7 +1,7 @@
 import { Strategy } from 'passport-local';
 import { PassportStrategy } from '@nestjs/passport';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { LoginEmailUseCase } from '../../../application/handlers/login-email.usecase';
+import { LoginEmailUseCase } from '@auth/application/handlers/login-email.usecase';
 
 @Injectable()
 export class LocalEmailStrategy extends PassportStrategy(Strategy, 'local-email') {

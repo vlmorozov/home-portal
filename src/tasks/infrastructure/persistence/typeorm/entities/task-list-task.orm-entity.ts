@@ -8,7 +8,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { UserOrmEntity } from '../../../../../auth/infrastructure/persistence/typeorm/entities/user.orm-entity';
+import { UserOrmEntity } from '@auth/infrastructure/persistence/typeorm/entities/user.orm-entity';
 import { TaskListOrmEntity } from './task-list.orm-entity';
 import { TaskOrmEntity } from './task.orm-entity';
 
@@ -48,7 +48,9 @@ export class TaskListTaskOrmEntity {
   @JoinColumn({ name: 'taskId' })
   task!: TaskOrmEntity;
 
-  @ManyToOne(() => UserOrmEntity, { onDelete: 'CASCADE' })
+  @ManyToOne(() => UserOrmEntity, (user) => user.taskListLinks, {
+    onDelete: 'CASCADE',
+  })
   @JoinColumn({ name: 'userId' })
   user!: UserOrmEntity;
 }

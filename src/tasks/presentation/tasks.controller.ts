@@ -11,7 +11,7 @@ import {
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
-import { CurrentUserId } from '../../shared/utils/current-user-id.decorator';
+import { CurrentUserId } from '@shared/utils/current-user-id.decorator';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
 import { CreateTaskUseCase } from '../application/handlers/tasks/create-task.usecase';

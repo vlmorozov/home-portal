@@ -1,4 +1,4 @@
-import { ValueObject } from '../../../shared/domain/value-object';
+import { ValueObject } from '@shared/domain/value-object';
 
 const EMAIL_REGEX = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
 

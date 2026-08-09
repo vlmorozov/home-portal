@@ -1,4 +1,4 @@
-import { AggregateRoot } from '../../shared/domain/aggregate-root';
+import { AggregateRoot } from '@shared/domain/aggregate-root';
 import { Task } from './task.entity';
 
 export class TaskAggregate extends AggregateRoot<string> {

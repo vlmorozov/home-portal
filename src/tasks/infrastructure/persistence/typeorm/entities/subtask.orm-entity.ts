@@ -8,7 +8,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { UserOrmEntity } from '../../../../../auth/infrastructure/persistence/typeorm/entities/user.orm-entity';
+import { UserOrmEntity } from '@auth/infrastructure/persistence/typeorm/entities/user.orm-entity';
 import { TaskOrmEntity } from './task.orm-entity';
 
 @Entity('subtasks')
@@ -46,7 +46,9 @@ export class SubtaskOrmEntity {
   @JoinColumn({ name: 'parentTaskId' })
   parentTask!: TaskOrmEntity;
 
-  @ManyToOne(() => UserOrmEntity, { onDelete: 'CASCADE' })
+  @ManyToOne(() => UserOrmEntity, (user) => user.subtasks, {
+    onDelete: 'CASCADE',
+  })
   @JoinColumn({ name: 'userId' })
   user!: UserOrmEntity;
 }

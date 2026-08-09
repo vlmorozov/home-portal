@@ -1,10 +1,10 @@
 import { BadRequestException, NotFoundException } from '@nestjs/common';
-import { CreateTaskEventUseCase } from '../../../src/tasks/application/handlers/task-events/create-task-event.usecase';
-import { DeleteTaskEventUseCase } from '../../../src/tasks/application/handlers/task-events/delete-task-event.usecase';
-import { GetLatestTaskEventUseCase } from '../../../src/tasks/application/handlers/task-events/get-latest-task-event.usecase';
-import { GetTaskEventUseCase } from '../../../src/tasks/application/handlers/task-events/get-task-event.usecase';
-import { ListTaskEventsUseCase } from '../../../src/tasks/application/handlers/task-events/list-task-events.usecase';
-import { UpdateTaskEventUseCase } from '../../../src/tasks/application/handlers/task-events/update-task-event.usecase';
+import { CreateTaskEventUseCase } from '@tasks/application/handlers/task-events/create-task-event.usecase';
+import { DeleteTaskEventUseCase } from '@tasks/application/handlers/task-events/delete-task-event.usecase';
+import { GetLatestTaskEventUseCase } from '@tasks/application/handlers/task-events/get-latest-task-event.usecase';
+import { GetTaskEventUseCase } from '@tasks/application/handlers/task-events/get-task-event.usecase';
+import { ListTaskEventsUseCase } from '@tasks/application/handlers/task-events/list-task-events.usecase';
+import { UpdateTaskEventUseCase } from '@tasks/application/handlers/task-events/update-task-event.usecase';
 
 describe('TaskEvent use cases', () => {
   const userId = 'user-1';

@@ -1,9 +1,9 @@
 import { BadRequestException, NotFoundException } from '@nestjs/common';
-import { CreateTaskListUseCase } from '../../../src/tasks/application/handlers/task-lists/create-task-list.usecase';
-import { DeleteTaskListUseCase } from '../../../src/tasks/application/handlers/task-lists/delete-task-list.usecase';
-import { GetTaskListUseCase } from '../../../src/tasks/application/handlers/task-lists/get-task-list.usecase';
-import { ListTaskListsUseCase } from '../../../src/tasks/application/handlers/task-lists/list-task-lists.usecase';
-import { UpdateTaskListUseCase } from '../../../src/tasks/application/handlers/task-lists/update-task-list.usecase';
+import { CreateTaskListUseCase } from '@tasks/application/handlers/task-lists/create-task-list.usecase';
+import { DeleteTaskListUseCase } from '@tasks/application/handlers/task-lists/delete-task-list.usecase';
+import { GetTaskListUseCase } from '@tasks/application/handlers/task-lists/get-task-list.usecase';
+import { ListTaskListsUseCase } from '@tasks/application/handlers/task-lists/list-task-lists.usecase';
+import { UpdateTaskListUseCase } from '@tasks/application/handlers/task-lists/update-task-list.usecase';
 
 describe('TaskList use cases', () => {
   const userId = 'user-1';

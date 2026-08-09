@@ -1,7 +1,7 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { randomInt } from 'crypto';
-import { UserRepository, USER_REPOSITORY } from '../../domain/repositories/user.repository';
-import { PasswordResetTokenRepository, PASSWORD_RESET_TOKEN_REPOSITORY } from '../../domain/repositories/password-reset-token.repository';
+import { UserRepository, USER_REPOSITORY } from '@auth/domain/repositories/user.repository';
+import { PasswordResetTokenRepository, PASSWORD_RESET_TOKEN_REPOSITORY } from '@auth/domain/repositories/password-reset-token.repository';
 import { SmsService } from '../services/sms.service';
 
 @Injectable()

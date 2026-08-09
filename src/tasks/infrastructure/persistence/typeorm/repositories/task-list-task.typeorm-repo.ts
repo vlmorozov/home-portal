@@ -4,9 +4,9 @@ import { Repository } from 'typeorm';
 import {
   CreateTaskListTaskInput,
   TaskListTaskRepository,
-} from '../../../../domain/repositories/task-list-task.repository';
-import { TaskListTask } from '../../../../domain/task-list-task.entity';
-import { Task } from '../../../../domain/task.entity';
+} from '@tasks/domain/repositories/task-list-task.repository';
+import { TaskListTask } from '@tasks/domain/task-list-task.entity';
+import { Task } from '@tasks/domain/task.entity';
 import { TaskListTaskOrmEntity } from '../entities/task-list-task.orm-entity';
 import { TaskOrmEntity } from '../entities/task.orm-entity';
 

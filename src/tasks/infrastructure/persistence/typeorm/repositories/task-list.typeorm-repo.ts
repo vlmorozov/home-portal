@@ -5,8 +5,8 @@ import {
   CreateTaskListInput,
   TaskListRepository,
   UpdateTaskListInput,
-} from '../../../../domain/repositories/task-list.repository';
-import { TaskList } from '../../../../domain/task-list.entity';
+} from '@tasks/domain/repositories/task-list.repository';
+import { TaskList } from '@tasks/domain/task-list.entity';
 import { TaskListOrmEntity } from '../entities/task-list.orm-entity';
 
 @Injectable()

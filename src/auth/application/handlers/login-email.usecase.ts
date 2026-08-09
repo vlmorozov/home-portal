@@ -1,5 +1,5 @@
 import { Inject, Injectable, Logger, UnauthorizedException } from '@nestjs/common';
-import { UserRepository, USER_REPOSITORY } from '../../domain/repositories/user.repository';
+import { UserRepository, USER_REPOSITORY } from '@auth/domain/repositories/user.repository';
 import { PasswordHasher } from '../services/password.service';
 import { TokenService } from '../services/token.service';
 

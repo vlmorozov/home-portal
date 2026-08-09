@@ -1,6 +1,6 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
 import { IsDateString, IsIn, IsOptional, IsString, MaxLength } from 'class-validator';
-import { TaskStatus, TASK_STATUSES } from '../../domain/task-event.entity';
+import { TaskStatus, TASK_STATUSES } from '@tasks/domain/task-event.entity';
 
 export class UpdateTaskDto {
   @ApiPropertyOptional({ example: 'Buy groceries and supplies' })

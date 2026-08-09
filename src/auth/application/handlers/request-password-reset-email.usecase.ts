@@ -1,8 +1,8 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { randomBytes } from 'crypto';
-import { UserRepository, USER_REPOSITORY } from '../../domain/repositories/user.repository';
+import { UserRepository, USER_REPOSITORY } from '@auth/domain/repositories/user.repository';
 import { EmailService } from '../services/email.service';
-import { PasswordResetTokenRepository, PASSWORD_RESET_TOKEN_REPOSITORY } from '../../domain/repositories/password-reset-token.repository';
+import { PasswordResetTokenRepository, PASSWORD_RESET_TOKEN_REPOSITORY } from '@auth/domain/repositories/password-reset-token.repository';
 
 @Injectable()
 export class RequestPasswordResetEmailUseCase {

@@ -1,4 +1,4 @@
-import { AggregateRoot } from '../../shared/domain/aggregate-root';
+import { AggregateRoot } from '@shared/domain/aggregate-root';
 import { Item } from './item.entity';
 
 export class ShoppingListAggregate extends AggregateRoot<string> {

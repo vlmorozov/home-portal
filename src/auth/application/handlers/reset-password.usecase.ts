@@ -1,7 +1,7 @@
 import { Inject, Injectable, Logger, UnauthorizedException } from '@nestjs/common';
 import { PasswordHasher } from '../services/password.service';
-import { UserRepository, USER_REPOSITORY } from '../../domain/repositories/user.repository';
-import { PasswordResetTokenRepository, PASSWORD_RESET_TOKEN_REPOSITORY } from '../../domain/repositories/password-reset-token.repository';
+import { UserRepository, USER_REPOSITORY } from '@auth/domain/repositories/user.repository';
+import { PasswordResetTokenRepository, PASSWORD_RESET_TOKEN_REPOSITORY } from '@auth/domain/repositories/password-reset-token.repository';
 
 @Injectable()
 export class ResetPasswordUseCase {

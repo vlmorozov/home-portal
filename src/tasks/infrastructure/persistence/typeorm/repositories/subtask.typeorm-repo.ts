@@ -5,8 +5,8 @@ import {
   CreateSubtaskInput,
   SubtaskRepository,
   UpdateSubtaskInput,
-} from '../../../../domain/repositories/subtask.repository';
-import { Subtask } from '../../../../domain/subtask.entity';
+} from '@tasks/domain/repositories/subtask.repository';
+import { Subtask } from '@tasks/domain/subtask.entity';
 import { SubtaskOrmEntity } from '../entities/subtask.orm-entity';
 
 @Injectable()

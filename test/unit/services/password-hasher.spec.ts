@@ -1,4 +1,4 @@
-import { PasswordHasher } from '../../../src/auth/application/services/password.service';
+import { PasswordHasher } from '@auth/application/services/password.service';
 
 describe('PasswordHasher', () => {
   it('hash/compare', async () => {

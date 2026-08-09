@@ -8,8 +8,8 @@ import {
 import {
   TaskListRepository,
   TASK_LIST_REPOSITORY,
-} from '../../../domain/repositories/task-list.repository';
-import { TaskTitle } from '../../../domain/value-objects/task-title.vo';
+} from '@tasks/domain/repositories/task-list.repository';
+import { TaskTitle } from '@tasks/domain/value-objects/task-title.vo';
 
 @Injectable()
 export class UpdateTaskListUseCase {

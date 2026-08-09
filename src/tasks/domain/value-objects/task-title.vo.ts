@@ -1,4 +1,4 @@
-import { ValueObject } from '../../../shared/domain/value-object';
+import { ValueObject } from '@shared/domain/value-object';
 
 export class TaskTitle extends ValueObject<string> {
   constructor(value: string) {

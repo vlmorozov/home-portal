@@ -2,7 +2,7 @@ import { Inject, Injectable, Logger, NotFoundException } from '@nestjs/common';
 import {
   SubtaskRepository,
   SUBTASK_REPOSITORY,
-} from '../../../domain/repositories/subtask.repository';
+} from '@tasks/domain/repositories/subtask.repository';
 
 @Injectable()
 export class GetSubtaskUseCase {

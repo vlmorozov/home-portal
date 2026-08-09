@@ -1,7 +1,7 @@
 import { ConflictException, Inject, Injectable, Logger } from '@nestjs/common';
-import { UserRepository, USER_REPOSITORY } from '../../domain/repositories/user.repository';
+import { UserRepository, USER_REPOSITORY } from '@auth/domain/repositories/user.repository';
 import { PasswordHasher } from '../services/password.service';
-import { EmailTokenRepository, EMAIL_TOKEN_REPOSITORY } from '../../domain/repositories/email-token.repository';
+import { EmailTokenRepository, EMAIL_TOKEN_REPOSITORY } from '@auth/domain/repositories/email-token.repository';
 import { EmailService } from '../services/email.service';
 import { randomBytes, randomUUID } from 'crypto';
 

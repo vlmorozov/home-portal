@@ -10,6 +10,12 @@
     "sourceMap": true,
     "outDir": "./dist",
     "baseUrl": "./",
+    "paths": {
+      "@app/*": ["src/*"],
+      "@auth/*": ["src/auth/*"],
+      "@shared/*": ["src/shared/*"],
+      "@tasks/*": ["src/tasks/*"]
+    },
     "incremental": true,
     "strict": true
   }

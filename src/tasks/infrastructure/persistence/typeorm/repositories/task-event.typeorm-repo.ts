@@ -5,8 +5,8 @@ import {
   CreateTaskEventInput,
   TaskEventRepository,
   UpdateTaskEventInput,
-} from '../../../../domain/repositories/task-event.repository';
-import { TaskEvent } from '../../../../domain/task-event.entity';
+} from '@tasks/domain/repositories/task-event.repository';
+import { TaskEvent } from '@tasks/domain/task-event.entity';
 import { TaskEventOrmEntity } from '../entities/task-event.orm-entity';
 
 @Injectable()

@@ -1,4 +1,4 @@
-import { LoginEmailUseCase } from '../../../src/auth/application/handlers/login-email.usecase';
+import { LoginEmailUseCase } from '@auth/application/handlers/login-email.usecase';
 
 describe('LoginEmailUseCase', () => {
   it('returns token if password ok', async () => {

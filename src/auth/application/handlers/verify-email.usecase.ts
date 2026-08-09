@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { EmailTokenRepository, EMAIL_TOKEN_REPOSITORY } from '../../domain/repositories/email-token.repository';
-import { UserRepository, USER_REPOSITORY } from '../../domain/repositories/user.repository';
+import { EmailTokenRepository, EMAIL_TOKEN_REPOSITORY } from '@auth/domain/repositories/email-token.repository';
+import { UserRepository, USER_REPOSITORY } from '@auth/domain/repositories/user.repository';
 
 @Injectable()
 export class VerifyEmailUseCase {

@@ -5,15 +5,15 @@ import {
   Logger,
   NotFoundException,
 } from '@nestjs/common';
-import { TaskStatus, TASK_STATUSES } from '../../../domain/task-event.entity';
+import { TaskStatus, TASK_STATUSES } from '@tasks/domain/task-event.entity';
 import {
   TaskEventRepository,
   TASK_EVENT_REPOSITORY,
-} from '../../../domain/repositories/task-event.repository';
+} from '@tasks/domain/repositories/task-event.repository';
 import {
   TaskRepository,
   TASK_REPOSITORY,
-} from '../../../domain/repositories/task.repository';
+} from '@tasks/domain/repositories/task.repository';
 
 @Injectable()
 export class UpdateTaskEventUseCase {

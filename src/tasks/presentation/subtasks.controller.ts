@@ -11,7 +11,7 @@ import {
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
-import { CurrentUserId } from '../../shared/utils/current-user-id.decorator';
+import { CurrentUserId } from '@shared/utils/current-user-id.decorator';
 import { CreateSubtaskUseCase } from '../application/handlers/subtasks/create-subtask.usecase';
 import { DeleteSubtaskUseCase } from '../application/handlers/subtasks/delete-subtask.usecase';
 import { GetSubtaskUseCase } from '../application/handlers/subtasks/get-subtask.usecase';

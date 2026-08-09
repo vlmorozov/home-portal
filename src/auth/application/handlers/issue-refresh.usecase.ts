@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { RefreshTokenRepository, REFRESH_TOKEN_REPOSITORY } from '../../domain/repositories/refresh-token.repository';
+import { RefreshTokenRepository, REFRESH_TOKEN_REPOSITORY } from '@auth/domain/repositories/refresh-token.repository';
 import { randomBytes } from 'crypto';
 
 @Injectable()

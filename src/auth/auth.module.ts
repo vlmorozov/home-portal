@@ -2,16 +2,10 @@ import { Module } from '@nestjs/common';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { UserOrmEntity } from './infrastructure/persistence/typeorm/entities/user.orm-entity';
-import { OAuthAccountOrmEntity } from './infrastructure/persistence/typeorm/entities/oauth-account.orm-entity';
-import { EmailVerificationTokenOrmEntity } from './infrastructure/persistence/typeorm/entities/email-verification-token.orm-entity';
-import { PasswordResetTokenOrmEntity } from './infrastructure/persistence/typeorm/entities/password-reset-token.orm-entity';
-import { RefreshTokenOrmEntity } from './infrastructure/persistence/typeorm/entities/refresh-token.orm-entity';
-import { UserTypeOrmRepository } from './infrastructure/persistence/typeorm/repositories/user.typeorm-repo';
-import { EmailTokenTypeOrmRepository } from './infrastructure/persistence/typeorm/repositories/email-token.typeorm-repo';
-import { RefreshTokenTypeOrmRepository } from './infrastructure/persistence/typeorm/repositories/refresh-token.typeorm-repo';
-import { PasswordResetTokenTypeOrmRepository } from './infrastructure/persistence/typeorm/repositories/password-reset-token.typeorm-repo';
+import { UserPrismaRepository } from './infrastructure/persistence/prisma/repositories/user.prisma-repo';
+import { EmailTokenPrismaRepository } from './infrastructure/persistence/prisma/repositories/email-token.prisma-repo';
+import { RefreshTokenPrismaRepository } from './infrastructure/persistence/prisma/repositories/refresh-token.prisma-repo';
+import { PasswordResetTokenPrismaRepository } from './infrastructure/persistence/prisma/repositories/password-reset-token.prisma-repo';
 import { USER_REPOSITORY } from './domain/repositories/user.repository';
 import { EMAIL_TOKEN_REPOSITORY } from './domain/repositories/email-token.repository';
 import { REFRESH_TOKEN_REPOSITORY } from './domain/repositories/refresh-token.repository';
@@ -39,13 +33,6 @@ import { ResetPasswordUseCase } from './application/handlers/reset-password.usec
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([
-      UserOrmEntity,
-      OAuthAccountOrmEntity,
-      EmailVerificationTokenOrmEntity,
-      PasswordResetTokenOrmEntity,
-      RefreshTokenOrmEntity,
-    ]),
     PassportModule.register({ session: false }),
     JwtModule.registerAsync({
       inject: [ConfigService],
@@ -58,10 +45,10 @@ import { ResetPasswordUseCase } from './application/handlers/reset-password.usec
   controllers: [AuthController, ProfileController],
   providers: [
     // repos
-    { provide: USER_REPOSITORY, useClass: UserTypeOrmRepository },
-    { provide: EMAIL_TOKEN_REPOSITORY, useClass: EmailTokenTypeOrmRepository },
-    { provide: REFRESH_TOKEN_REPOSITORY, useClass: RefreshTokenTypeOrmRepository },
-    { provide: PASSWORD_RESET_TOKEN_REPOSITORY, useClass: PasswordResetTokenTypeOrmRepository },
+    { provide: USER_REPOSITORY, useClass: UserPrismaRepository },
+    { provide: EMAIL_TOKEN_REPOSITORY, useClass: EmailTokenPrismaRepository },
+    { provide: REFRESH_TOKEN_REPOSITORY, useClass: RefreshTokenPrismaRepository },
+    { provide: PASSWORD_RESET_TOKEN_REPOSITORY, useClass: PasswordResetTokenPrismaRepository },
     // services
     PasswordHasher,
     TokenService,

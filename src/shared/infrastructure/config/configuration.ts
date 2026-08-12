@@ -3,6 +3,7 @@ export default () => ({
   app: { port: parseInt(process.env.PORT || '3000', 10), url: process.env.APP_URL },
   cors: { allowedOrigins: process.env.CORS_ALLOWED_ORIGINS },
   db: {
+    url: process.env.DATABASE_URL,
     host: process.env.DB_HOST,
     port: parseInt(process.env.DB_PORT || '5432', 10),
     user: process.env.DB_USER,

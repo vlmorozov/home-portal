@@ -1,16 +1,10 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { TaskOrmEntity } from './infrastructure/persistence/typeorm/entities/task.orm-entity';
-import { TaskEventOrmEntity } from './infrastructure/persistence/typeorm/entities/task-event.orm-entity';
-import { SubtaskOrmEntity } from './infrastructure/persistence/typeorm/entities/subtask.orm-entity';
-import { TaskListOrmEntity } from './infrastructure/persistence/typeorm/entities/task-list.orm-entity';
-import { TaskListTaskOrmEntity } from './infrastructure/persistence/typeorm/entities/task-list-task.orm-entity';
-import { TaskTypeOrmRepository } from './infrastructure/persistence/typeorm/repositories/task.typeorm-repo';
-import { TaskEventTypeOrmRepository } from './infrastructure/persistence/typeorm/repositories/task-event.typeorm-repo';
-import { SubtaskTypeOrmRepository } from './infrastructure/persistence/typeorm/repositories/subtask.typeorm-repo';
-import { TaskListTypeOrmRepository } from './infrastructure/persistence/typeorm/repositories/task-list.typeorm-repo';
-import { TaskListTaskTypeOrmRepository } from './infrastructure/persistence/typeorm/repositories/task-list-task.typeorm-repo';
-import { TaskTypeOrmUnitOfWork } from './infrastructure/persistence/typeorm/task-unit-of-work.typeorm';
+import { TaskPrismaRepository } from './infrastructure/persistence/prisma/repositories/task.prisma-repo';
+import { TaskEventPrismaRepository } from './infrastructure/persistence/prisma/repositories/task-event.prisma-repo';
+import { SubtaskPrismaRepository } from './infrastructure/persistence/prisma/repositories/subtask.prisma-repo';
+import { TaskListPrismaRepository } from './infrastructure/persistence/prisma/repositories/task-list.prisma-repo';
+import { TaskListTaskPrismaRepository } from './infrastructure/persistence/prisma/repositories/task-list-task.prisma-repo';
+import { TaskPrismaUnitOfWork } from './infrastructure/persistence/prisma/task-unit-of-work.prisma';
 import { TASK_REPOSITORY } from './domain/repositories/task.repository';
 import { TASK_EVENT_REPOSITORY } from './domain/repositories/task-event.repository';
 import { SUBTASK_REPOSITORY } from './domain/repositories/subtask.repository';
@@ -47,15 +41,7 @@ import { SubtasksController } from './presentation/subtasks.controller';
 import { TaskListsController } from './presentation/task-lists.controller';
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([
-      TaskOrmEntity,
-      TaskEventOrmEntity,
-      SubtaskOrmEntity,
-      TaskListOrmEntity,
-      TaskListTaskOrmEntity,
-    ]),
-  ],
+  imports: [],
   controllers: [
     TaskController,
     TaskEventsController,
@@ -63,15 +49,15 @@ import { TaskListsController } from './presentation/task-lists.controller';
     TaskListsController,
   ],
   providers: [
-    { provide: TASK_REPOSITORY, useClass: TaskTypeOrmRepository },
-    { provide: TASK_EVENT_REPOSITORY, useClass: TaskEventTypeOrmRepository },
-    { provide: SUBTASK_REPOSITORY, useClass: SubtaskTypeOrmRepository },
-    { provide: TASK_LIST_REPOSITORY, useClass: TaskListTypeOrmRepository },
+    { provide: TASK_REPOSITORY, useClass: TaskPrismaRepository },
+    { provide: TASK_EVENT_REPOSITORY, useClass: TaskEventPrismaRepository },
+    { provide: SUBTASK_REPOSITORY, useClass: SubtaskPrismaRepository },
+    { provide: TASK_LIST_REPOSITORY, useClass: TaskListPrismaRepository },
     {
       provide: TASK_LIST_TASK_REPOSITORY,
-      useClass: TaskListTaskTypeOrmRepository,
+      useClass: TaskListTaskPrismaRepository,
     },
-    { provide: TASK_UNIT_OF_WORK, useClass: TaskTypeOrmUnitOfWork },
+    { provide: TASK_UNIT_OF_WORK, useClass: TaskPrismaUnitOfWork },
     CreateTaskUseCase,
     ListTasksUseCase,
     GetTaskUseCase,

@@ -1,10 +1,8 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from './shared/infrastructure/config/config.module';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { ConfigService } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
 import { PinoLoggerModule } from './shared/infrastructure/logger/pino.module';
-import { join } from 'path';
+import { PrismaModule } from './shared/infrastructure/prisma/prisma.module';
 import { TasksModule } from './tasks/tasks.module';
 import { FinanceModule } from './finance/finance.module';
 import { ShoppingModule } from './shopping/shopping.module';
@@ -13,21 +11,7 @@ import { ShoppingModule } from './shopping/shopping.module';
   imports: [
     ConfigModule,
     PinoLoggerModule,
-    TypeOrmModule.forRootAsync({
-      inject: [ConfigService],
-      useFactory: (cfg: ConfigService) => ({
-        type: 'postgres',
-        host: cfg.get('db.host'),
-        port: cfg.get('db.port'),
-        username: cfg.get('db.user'),
-        password: cfg.get('db.password'),
-        database: cfg.get('db.name'),
-        autoLoadEntities: true,
-        synchronize: false,
-        migrations: [join(__dirname, '..', 'migrations', '*.{ts,js}')],
-        migrationsRun: true,
-      }),
-    }),
+    PrismaModule,
     AuthModule,
     TasksModule,
     FinanceModule,

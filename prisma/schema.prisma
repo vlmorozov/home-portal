@@ -1,0 +1,166 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id            String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  username      String   @unique @db.VarChar(64)
+  email         String   @unique @db.VarChar(254)
+  phone         String?  @unique @db.VarChar(32)
+  passwordHash  String?  @db.VarChar
+  emailVerified Boolean  @default(false)
+  createdAt     DateTime @default(now()) @db.Timestamptz
+  updatedAt     DateTime @default(now()) @updatedAt @db.Timestamptz
+
+  oauthAccounts           OAuthAccount[]
+  emailVerificationTokens EmailVerificationToken[]
+  passwordResetTokens     PasswordResetToken[]
+  refreshTokens           RefreshToken[]
+  tasks                   Task[]
+  taskEvents              TaskEvent[]
+  subtasks                Subtask[]
+  taskLists               TaskList[]
+  taskListTasks           TaskListTask[]
+
+  @@map("users")
+}
+
+model OAuthAccount {
+  id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  provider   String   @db.VarChar
+  providerId String   @db.VarChar
+  userId     String   @db.Uuid
+  createdAt  DateTime @default(now()) @db.Timestamptz
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerId])
+  @@map("oauth_accounts")
+}
+
+model EmailVerificationToken {
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId    String   @db.Uuid
+  token     String   @unique @db.VarChar
+  expiresAt DateTime @db.Timestamptz
+  createdAt DateTime @default(now()) @db.Timestamptz
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("email_verification_tokens")
+}
+
+model PasswordResetToken {
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId    String   @db.Uuid
+  token     String   @unique @db.VarChar
+  channel   String   @db.VarChar(16)
+  expiresAt DateTime @db.Timestamptz
+  createdAt DateTime @default(now()) @db.Timestamptz
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("password_reset_tokens")
+}
+
+model RefreshToken {
+  id        String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId    String    @db.Uuid
+  token     String    @unique @db.VarChar
+  expiresAt DateTime  @db.Timestamptz
+  createdAt DateTime  @default(now()) @db.Timestamptz
+  revokedAt DateTime? @db.Timestamptz
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("refresh_tokens")
+}
+
+model Task {
+  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId      String   @db.Uuid
+  title       String   @db.VarChar(200)
+  description String?  @db.Text
+  createdAt   DateTime @default(now()) @db.Timestamptz
+  updatedAt   DateTime @default(now()) @updatedAt @db.Timestamptz
+
+  user          User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  events        TaskEvent[]
+  subtasks      Subtask[]      @relation("ParentTaskSubtasks")
+  parentLinks   Subtask[]      @relation("ChildTaskSubtasks")
+  taskListTasks TaskListTask[]
+
+  @@index([userId])
+  @@map("tasks")
+}
+
+model TaskEvent {
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  taskId    String   @db.Uuid
+  userId    String   @db.Uuid
+  status    String   @default("pending") @db.VarChar(32)
+  dueDate   DateTime? @db.Timestamptz
+  createdAt DateTime @default(now()) @db.Timestamptz
+  updatedAt DateTime @default(now()) @updatedAt @db.Timestamptz
+
+  task Task @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, taskId])
+  @@index([userId, dueDate])
+  @@map("task_events")
+}
+
+model Subtask {
+  id           String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId       String   @db.Uuid
+  parentTaskId String   @db.Uuid
+  taskId       String   @db.Uuid
+  createdAt    DateTime @default(now()) @db.Timestamptz
+  updatedAt    DateTime @default(now()) @updatedAt @db.Timestamptz
+
+  user       User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  parentTask Task @relation("ParentTaskSubtasks", fields: [parentTaskId], references: [id], onDelete: Cascade)
+  task       Task @relation("ChildTaskSubtasks", fields: [taskId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, parentTaskId, taskId])
+  @@index([userId, parentTaskId])
+  @@map("subtasks")
+}
+
+model TaskList {
+  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId      String   @db.Uuid
+  title       String   @db.VarChar(200)
+  description String?  @db.Text
+  createdAt   DateTime @default(now()) @db.Timestamptz
+  updatedAt   DateTime @default(now()) @updatedAt @db.Timestamptz
+
+  user  User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tasks TaskListTask[]
+
+  @@index([userId])
+  @@map("task_lists")
+}
+
+model TaskListTask {
+  id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  taskListId String   @db.Uuid
+  taskId     String   @db.Uuid
+  userId     String   @db.Uuid
+  createdAt  DateTime @default(now()) @db.Timestamptz
+  updatedAt  DateTime @default(now()) @updatedAt @db.Timestamptz
+
+  taskList TaskList @relation(fields: [taskListId], references: [id], onDelete: Cascade)
+  task     Task     @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, taskListId, taskId])
+  @@index([userId, taskListId])
+  @@index([userId, taskId])
+  @@map("task_list_tasks")
+}

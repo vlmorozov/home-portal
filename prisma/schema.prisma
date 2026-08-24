@@ -25,6 +25,7 @@ model User {
   subtasks                Subtask[]
   taskLists               TaskList[]
   taskListTasks           TaskListTask[]
+  shoppingLists           ShoppingList[]
 
   @@map("users")
 }

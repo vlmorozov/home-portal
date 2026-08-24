@@ -18,13 +18,28 @@ model ShoppingItem {
   name           String   @db.VarChar(200)
   quantity       Decimal  @default(1) @db.Decimal(10, 3)
   unit           String   @db.VarChar(32)
-  purchased      Boolean  @default(false)
+  completed      Boolean  @default(false)
   createdAt      DateTime @default(now()) @db.Timestamptz
   updatedAt      DateTime @default(now()) @updatedAt @db.Timestamptz
 
   shoppingList ShoppingList @relation(fields: [shoppingListId], references: [id], onDelete: Cascade)
+  purchases    ShoppingItemPurchase[]
 
   @@index([shoppingListId])
-  @@index([shoppingListId, purchased])
+  @@index([shoppingListId, completed])
   @@map("shopping_items")
+}
+
+model ShoppingItemPurchase {
+  id             String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  shoppingItemId String   @db.Uuid
+  quantity       Decimal  @default(1) @db.Decimal(10, 3)
+  unitPrice      Decimal  @default(0) @db.Decimal(12, 2) 
+  currency       String   @default("EUR") @db.Char(3)
+  purchasedAt    DateTime @default(now()) @db.Timestamptz
+
+  shoppingItem ShoppingItem @relation(fields: [shoppingItemId], references: [id], onDelete: Cascade)
+
+  @@index([shoppingItemId])
+  @@map("shopping_item_purchases")
 }
